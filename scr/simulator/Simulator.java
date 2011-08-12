@@ -12,6 +12,8 @@ public class Simulator extends Thread
 {
 	private  Wall wall;
 	private JFrame windows;
+	private int width;
+	private int height;
 	
 	private boolean run=true;
 	
@@ -19,10 +21,15 @@ public class Simulator extends Thread
 	/**
 	 * @param args
 	 */
-	public Simulator()
+	public Simulator(int height, int width)
 	{
+		
+		this.height=height;
+		this.width=width;
+		
 		this.buildShapes();
 		this.buildGUI();
+
 		
 	}
 	
@@ -32,17 +39,16 @@ public class Simulator extends Thread
 		//TODO: Circle
 		//TODO: Bar
 		
-		//this.panel.add(this.dot);
-		//this.panel.add(this.circle);
-		//this.panel.add(this.bar);
+		this.dot.maxPosX=this.width/2;
+		this.dot.maxPosY=this.height/2;
 	}
 	
 	public void buildGUI()
 	{
-		this.wall=new Wall(1000,1000,this.dot);
+		this.wall=new Wall(this.height,this.width,this.dot);
 		//this.wall.add(dot);
 		//this.wall.setLayout(new FlowLayout());
-		this.wall.setBounds(0,0,1000,1000);
+		this.wall.setBounds(0,0,800,800);
 		this.wall.setBackground(Color.WHITE);
 		
 		
@@ -53,7 +59,8 @@ public class Simulator extends Thread
 		
 		windows.setContentPane(wall);
 		
-		windows.setBounds(0, 0, 200, 200);
+		windows.setBounds(0, 0, 800, 800);
+		windows.setSize(800, 800);
 		
 		//windows.pack();
 	
@@ -90,7 +97,7 @@ public class Simulator extends Thread
 	{
 		try 
 		{
-			Thread.sleep(100);
+			Thread.sleep(26);
 		} 
 		catch (InterruptedException e) 
 		{

@@ -14,23 +14,21 @@ import java.util.Random;
  * @author Lukas
  *
  */
-public class Dot extends MyShape {
+public class Circle extends MyShape {
 
 	
 	
 	/**
 	 * 
 	 */
-	public Dot(int difficultyLevel, double sensibility)
+	public Circle(int difficultyLevel, double sensibility)
 	{
 		super(difficultyLevel,sensibility);
 		
 		this.posX=0;
 		this.posY=0;
-		
-		this.name="Dot";
-		
-		//this.setBounds(0, 0, this.diameter*10,  this.diameter*10);
+		this.diameter=20;
+		this.name="Circle";
 	}
 
 	
@@ -41,47 +39,33 @@ public class Dot extends MyShape {
 	{
 		Random rnd=new Random();
 		
-		int valueX=rnd.nextInt(2);
-		int valueY=rnd.nextInt(2);
+		double valueScale=rnd.nextInt(2)/10;
 		
-		boolean isPositivX=rnd.nextBoolean();
-		boolean isPositivY=rnd.nextBoolean();
+		boolean isPositiv=rnd.nextBoolean();
 		
-		if (!isPositivX)
+		if (!isPositiv)
 		{
-			valueX*=(-1);
+			valueScale*=(-1);
 		}
 		
-		if (!isPositivY)
-		{
-			valueY*=(-1);
-		}
-		
-		this.inputX(valueX);
-		this.inputY(valueY);
+		this.inputScale(valueScale);
 	}
 
-	public void inputX(int x)
+	public void inputScale(double s)
 	{
-		this.velocityX+=x;	//FOR KEY
-		//this.posX=x;			//FOR MOUSE
+		this.velocityScale+=s;	
 		
 		
 	}
 	
-	public void inputY(int y)
-	{
-		this.velocityY+=y;	//FOR KEY
-		//this.posY=y;			//FOR MOUSE
-	}
 	
 	public void draw(Graphics g)
 	{
 		this.aTrans.setToTranslation(posX, posY); 	//Copy the position into a matix
-		
+		this.aTrans.setToScale(this.scaleFactor, this.scaleFactor);
 		Graphics2D g2d = (Graphics2D)g; //cast Graphics g to Graphics2D g2d
-		g2d.setColor(Color.BLUE);
-		
+		g2d.setColor(Color.RED);
+		//TODO
 		Rectangle2D.Double rec=new Rectangle2D.Double(posX, posY, this.diameter, this.diameter);
 
 		this.shape= aTrans.createTransformedShape(rec);

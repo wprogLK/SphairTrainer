@@ -3,19 +3,15 @@
  */
 package simulator;
 
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-
-import javax.swing.JPanel;
 
 /**
  * @author Lukas
  *
  */
-public abstract class MyShape extends Container
+public abstract class MyShape
 {
 	protected Shape shape;
 	
@@ -66,7 +62,7 @@ public abstract class MyShape extends Container
 	 */
 	protected int difficultyLevel;		
 	
-	protected final int startCounter=6;
+	protected final int startCounter=100;//60;
 	protected int counter;		
 	
 	
@@ -76,7 +72,6 @@ public abstract class MyShape extends Container
 		this.setSensibilityLevel(sensibility);
 		
 		this.aTrans.setToTranslation(0, 0);
-		this.setPreferredSize(new Dimension((int) this.diameter,(int) this.diameter)); 
 	}
 	
 	public Shape getShape()
@@ -117,7 +112,6 @@ public abstract class MyShape extends Container
 		this.checkForChange();
 		this.updateMove();
 		this.move();
-		//this.repaint();	//OLD
 	}
 	
 	public AffineTransform getAffineTransform()
@@ -176,8 +170,31 @@ public abstract class MyShape extends Container
 		this.angle=this.angle+this.velocityAngle;
 		
 		this.scaleFactor=this.scaleFactor+this.velocityScale;
+		
+		this.checkValidMove();
 	}
 	
+	private void checkValidMove()
+	{
+		
+		posX=Math.min(this.posX, this.maxPosX);
+		posY=Math.min(this.posY, this.maxPosY);
+		
+		
+		posX=Math.max(this.posX, this.minPosX);
+		posY=Math.max(this.posY, this.minPosY);
+		
+		//System.out.println("MAX X= " + this.maxPosX);
+		
+		this.angle=Math.min(this.angle, this.maxAngle);
+		this.angle=Math.max(this.angle, this.minAngle);
+		
+		
+		this.scaleFactor=Math.min(this.scaleFactor, this.maxScaleFactor);
+		this.scaleFactor=Math.max(this.scaleFactor, this.minScaleFactor);
+	}
+	
+
 	public void printInfo()
 	{
 		System.out.println("Name: " + this.name);
